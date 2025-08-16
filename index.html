@@ -3,94 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>⚠️</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet">
+  <title>Музыка сразу</title>
   <style>
-    :root {
-      color-scheme: light dark;
-    }
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-direction: column;
-      font-family: 'Montserrat', sans-serif;
-      text-align: center;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-    }
-    .hidden {
-      display: none;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 18px;
-      border: none;
-      cursor: pointer;
-      background-color: var(--button-bg);
-      color: var(--button-text);
-      border-radius: 5px;
-      margin-top: 15px;
-      font-family: 'Montserrat', sans-serif;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-color: #121212;
-        --text-color: #fff;
-        --button-bg: #333;
-        --button-text: #fff;
-      }
-    }
-    @media (prefers-color-scheme: light) {
-      :root {
-        --bg-color: #fff;
-        --text-color: #000;
-        --button-bg: #ddd;
-        --button-text: #000;
-      }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
     }
   </style>
 </head>
 <body>
-  <div id="errorScreen">
-    <h1>Что-то пошло не так ⚠️</h1>
-    <button onclick="retry()">Попробовать ещё раз</button>
-  </div>
-
-  <audio id="audio" loop>
+  <audio id="audio" loop autoplay>
     <source src="sound.mp3" type="audio/mpeg">
     Ваш браузер не поддерживает аудио.
   </audio>
 
   <script>
-    const audio = document.getElementById("audio");
-
-    // Пытаемся воспроизвести звук при первом взаимодействии
-    function tryPlayAudio() {
-      audio.play().catch(e => {
-        console.log("Автовоспроизведение не удалось:", e);
-      });
-      // Удаляем обработчики после первого взаимодействия
-      window.removeEventListener("click", tryPlayAudio);
-      window.removeEventListener("keydown", tryPlayAudio);
-      window.removeEventListener("mousemove", tryPlayAudio);
-      window.removeEventListener("touchstart", tryPlayAudio);
-    }
-
-    // Слушаем любое взаимодействие
-    window.addEventListener("click", tryPlayAudio);
-    window.addEventListener("keydown", tryPlayAudio);
-    window.addEventListener("mousemove", tryPlayAudio);
-    window.addEventListener("touchstart", tryPlayAudio);
-
-    // Функция кнопки
-    function retry() {
-      document.getElementById("errorScreen").classList.add("hidden");
-      if (audio.paused) {
-        audio.play().catch(e => console.log("Ошибка воспроизведения:", e));
-      }
-    }
+    const audio = document.getElementById('audio');
+    audio.play().catch(e => {
+      console.log('Пытался запустить автоплей, но браузер заблокировал:', e);
+    });
   </script>
 </body>
 </html>
